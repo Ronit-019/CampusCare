@@ -219,12 +219,4 @@ This project is open-source and available under the [MIT License](LICENSE).
 Feel free to connect on https://www.linkedin.com/in/ronit-rajput-973602278 or reach out via email.
 
 
-```
-
-
----
-
-
-W
-
 
