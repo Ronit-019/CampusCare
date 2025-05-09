@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Student Grievance Portal</title>
+  <style>
+    /* CSS Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Color Palette */
+      --primary: #3a86ff;
+      --primary-dark: #2667d4;
+      --secondary: #8ecae6;
+      --accent: #ffd166;
+      --success: #70e000;
+      --warning: #ffbe0b;
+      --danger: #ef476f;
+      --neutral-100: #f8f9fa;
+      --neutral-200: #e9ecef;
+      --neutral-300: #dee2e6;
+      --neutral-400: #ced4da;
+      --neutral-500: #adb5bd;
+      --neutral-600: #6c757d;
+      --neutral-700: #495057;
+      --neutral-800: #343a40;
+      --neutral-900: #212529;
+
+      /* Typography */
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --heading-line-height: 1.2;
+      --body-line-height: 1.6;
+
+      /* Spacing & Layout */
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2.5rem;
+      --spacing-xxl: 4rem;
+
+      /* Border Radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+      /* Transitions */
+      --transition-fast: 150ms ease-in-out;
+      --transition-normal: 300ms ease-in-out;
+    }
+
+    body {
+      font-family: var(--font-family);
+      line-height: var(--body-line-height);
+      color: var(--neutral-800);
+      background-color: var(--neutral-100);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-md);
+    }
+
+    .register-container {
+      background-color: white;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      width: 100%;
+      max-width: 500px;
+      padding: var(--spacing-xl);
+      text-align: center;
+    }
+
+    .register-logo {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .register-logo img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .register-header {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .register-header h2 {
+      color: var(--neutral-800);
+      font-size: 1.75rem;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .register-header p {
+      color: var(--neutral-600);
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-lg);
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: var(--spacing-xs);
+      color: var(--neutral-700);
+      font-weight: 500;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: var(--spacing-md);
+      font-size: 1rem;
+      border: 1px solid var(--neutral-300);
+      border-radius: var(--radius-md);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+    }
+
+    .form-input.error {
+      border-color: var(--danger);
+    }
+
+    .input-error-message {
+      color: var(--danger);
+      font-size: 0.875rem;
+      margin-top: var(--spacing-xs);
+      display: none;
+    }
+
+    .input-error-message.visible {
+      display: block;
+    }
+
+    .password-field {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: var(--spacing-md);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--neutral-500);
+      cursor: pointer;
+    }
+
+    .password-strength {
+      margin-top: var(--spacing-xs);
+      height: 5px;
+      border-radius: var(--radius-sm);
+      background-color: var(--neutral-300);
+      overflow: hidden;
+    }
+
+    .password-strength-meter {
+      height: 100%;
+      width: 0;
+      transition: width var(--transition-normal), background-color var(--transition-normal);
+    }
+
+    .password-strength-text {
+      font-size: 0.75rem;
+      color: var(--neutral-600);
+      margin-top: var(--spacing-xs);
+      text-align: right;
+    }
+
+    .form-row {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .terms-checkbox {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: var(--spacing-lg);
+      text-align: left;
+    }
+
+    .terms-checkbox input {
+      margin-right: var(--spacing-sm);
+      margin-top: 0.25rem;
+    }
+
+    .terms-checkbox label {
+      font-size: 0.875rem;
+      color: var(--neutral-700);
+    }
+
+    .terms-checkbox a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .terms-checkbox a:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      display: inline-block;
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      user-select: none;
+      border: none;
+      padding: var(--spacing-sm) var(--spacing-lg);
+      font-size: 1rem;
+      line-height: 1.5;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      width: 100%;
+      padding: var(--spacing-md);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .login-link {
+      margin-top: var(--spacing-lg);
+      color: var(--neutral-600);
+    }
+
+    .login-link a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Ripple Effect */
+    .btn .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 600ms linear;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Toast notification */
+    .toast-container {
+      position: fixed;
+      bottom: var(--spacing-lg);
+      right: var(--spacing-lg);
+      z-index: 1000;
+    }
+
+    .toast {
+      background-color: white;
+      color: var(--neutral-800);
+      padding: var(--spacing-md) var(--spacing-lg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      margin-top: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transform: translateX(120%);
+      transition: transform var(--transition-normal);
+      min-width: 300px;
+    }
+
+    .toast.visible {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--success);
+    }
+
+    .toast.warning {
+      border-left: 4px solid var(--warning);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--danger);
+    }
+
+    .toast-close {
+      background: none;
+      border: none;
+      color: var(--neutral-500);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    /* For screens smaller than 480px */
+    @media (max-width: 480px) {
+      .register-container {
+        padding: var(--spacing-lg);
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <div class="register-logo">
+      <!-- Logo placeholder -->
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="60" height="60" rx="12" fill="#3A86FF"/>
+        <path d="M20 30H40M20 20H40M20 40H30" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="register-header">
+      <h2>Student Registration</h2>
+      <p>Create your account to access the grievance portal</p>
+    </div>
+
+    <form method="POST" id="registerForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Enter your first name" required>
+          <div class="input-error-message" id="firstName-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Enter your last name" required>
+          <div class="input-error-message" id="lastName-error"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
+        <div class="input-error-message" id="email-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-field">
+          <input type="password" id="password" name="password" class="form-input" placeholder="Choose a password" required>
+          <button type="button" class="toggle-password" id="togglePassword">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5C7 5 2.73 8.11 1 12.5C2.73 16.89 7 20 12 20C17 20 21.27 16.89 23 12.5C21.27 8.11 17 5 12 5ZM12 17.5C9.24 17.5 7 15.26 7 12.5C7 9.74 9.24 7.5 12 7.5C14.76 7.5 17 9.74 17 12.5C17 15.26 14.76 17.5 12 17.5ZM12 9.5C10.34 9.5 9 10.84 9 12.5C9 14.16 10.34 15.5 12 15.5C13.66 15.5 15 14.16 15 12.5C15 10.84 13.66 9.5 12 9.5Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+
+      <div class="form-group">
+        <label for="year">Year</label>
+        <input type="text" id="year" name="year" class="form-input" placeholder="Enter your Year" required>
+        <div class="input-error-message" id="year-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="sem">Semester</label>
+        <input type="text" id="sem" name="sem" class="form-input" placeholder="Enter your Semester" required>
+        <div class="input-error-message" id="sem-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="branch">Branch</label>
+        <input type="text" id="branch" name="branch" class="form-input" placeholder="Enter your Branch" required>
+        <div class="input-error-message" id="branch-error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="section">Section</label>
+        <input type="text" id="section" name="section" class="form-input" placeholder="Enter your Section" required>
+        <div class="input-error-message" id="section-error"></div>
+      </div>
+
+
+
+      <div class="terms-checkbox">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="registerButton">Create Account</button>
+
+      </div>
+    </form>
+
+    <div class="login-link">
+      <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+  </div>
+
+  <div class="toast-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Ripple effect for buttons
+      const buttons = document.querySelectorAll('.btn');
+
+      buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          const x = e.clientX - e.target.getBoundingClientRect().left;
+          const y = e.clientY - e.target.getBoundingClientRect().top;
+
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
+
+          this.appendChild(ripple);
+
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+
+      // Toggle password visibility
+      function setupPasswordToggle(inputId, toggleId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleButton = document.getElementById(toggleId);
+
+        toggleButton.addEventListener('click', function() {
+          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordInput.setAttribute('type', type);
+
+          // Change the icon based on visibility
+          if (type === 'text') {
+            this.innerHTML = `
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 7C14.76 7 17 9.24 17 12C17 12.65 16.87 13.26 16.64 13.83L19.56 16.75C21.07 15.49 22.26 13.86 23 12C21.27 7.61 17 4.5 12 4.5C10.6 4.5 9.26 4.75 8 5.2L10.17 7.37C10.74 7.13 11.35 7 12 7ZM2 4.27L4.28 6.55L4.74 7.01C3.08 8.3 1.78 10.02 1 12C2.73 16.39 7 19.5 12 19.5C13.55 19.5 15.03 19.2 16.38 18.66L16.8 19.08L19.73 22L21 20.73L3.27 3L2 4.27ZM7.53 9.8L9.08 11.35C9.03 11.56 9 11.78 9 12C9 13.66 10.34 15 12 15C12.22 15 12.44 14.97 12.65 14.92L14.2 16.47C13.53 16.8 12.79 17 12 17C9.24 17 7 14.76 7 12C7 11.21 7.2 10.47 7.53 9.8ZM11.84 9.02L14.99 12.17L15.01 12.01C15.01 10.35 13.67 9.01 12.01 9.01L11.84 9.02Z" fill="currentColor"/>
+              </svg>
+            `;
+          } else {
+            this.innerHTML = `
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5C7 5 2.73 8.11 1 12.5C2.73 16.89 7 20 12 20C17 20 21.27 16.89 23 12.5C21.27 8.11 17 5 12 5ZM12 17.5C9.24 17.5 7 15.26 7 12.5C7 9.74 9.24 7.5 12 7.5C14.76 7.5 17 9.74 17 12.5C17 15.26 14.76 17.5 12 17.5ZM12 9.5C10.34 9.5 9 10.84 9 12.5C9 14.16 10.34 15.5 12 15.5C13.66 15.5 15 14.16 15 12.5C15 10.84 13.66 9.5 12 9.5Z" fill="currentColor"/>
+              </svg>
+            `;
+          }
+        });
+      }
+
+      setupPasswordToggle('password', 'togglePassword');
+      setupPasswordToggle('confirmPassword', 'toggleConfirmPassword');
+
+      // Password strength meter
+      const passwordInput = document.getElementById('password');
+      const strengthMeter = document.getElementById('strengthMeter');
+      const strengthText = document.getElementById('strengthText');
+
+      passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        let strength = 0;
+        let feedback = '';
+
+        if (password.length > 0) {
+          // Check length
+          if (password.length >= 8) strength += 25;
+
+          // Check for numbers
+          if (/\d/.test(password)) strength += 25;
+
+          // Check for lowercase letters
+          if (/[a-z]/.test(password)) strength += 25;
+
+          // Check for uppercase or special characters
+          if (/[A-Z]/.test(password) || /[^A-Za-z0-9]/.test(password)) strength += 25;
+
+          // Set color based on strength
+          let color;
+          if (strength < 50) {
+            color = '#ef476f'; // Weak - red
+            feedback = 'Weak';
+          } else if (strength < 75) {
+            color = '#ffbe0b'; // Medium - yellow
+            feedback = 'Medium';
+          } else {
+            color = '#70e000'; // Strong - green
+            feedback = 'Strong';
+          }
+
+          strengthMeter.style.width = `${strength}%`;
+          strengthMeter.style.backgroundColor = color;
+          strengthText.textContent = `Password strength: ${feedback}`;
+        } else {
+          strengthMeter.style.width = '0';
+          strengthText.textContent = 'Password strength';
+        }
+      });
+
+      // Form validation
+      const registerForm = document.getElementById('registerForm');
+      const firstNameInput = document.getElementById('firstName');
+      const lastNameInput = document.getElementById('lastName');
+      const emailInput = document.getElementById('email');
+      const yearInput = document.getElementById('year');
+      const semInput = document.getElementById('sem');
+      const branchInput = document.getElementById('branch');
+      const sectionInput = document.getElementById('section');
+      const termsCheckbox = document.getElementById('terms');
+
+      registerForm.addEventListener('submit', function(e) {
+        let isValid = true;
+
+        // Reset all errors
+        const errorElements = document.querySelectorAll('.input-error-message');
+        errorElements.forEach(el => {
+          el.classList.remove('visible');
+        });
+
+        const inputElements = document.querySelectorAll('.form-input');
+        inputElements.forEach(el => {
+          el.classList.remove('error');
+        });
+
+        // Validate first name
+        if (firstNameInput.value.trim() === '') {
+          showError(firstNameInput, 'firstName-error', 'First name is required');
+          isValid = false;
+        }
+
+        // Validate last name
+        if (lastNameInput.value.trim() === '') {
+          showError(lastNameInput, 'lastName-error', 'Last name is required');
+          isValid = false;
+        }
+
+        // Validate email
+        if (emailInput.value.trim() === '') {
+          showError(emailInput, 'email-error', 'Email is required');
+          isValid = false;
+        } else if (!isValidEmail(emailInput.value)) {
+          showError(emailInput, 'email-error', 'Please enter a valid email address');
+          isValid = false;
+        }
+
+
+        // Validate password
+        if (passwordInput.value === '') {
+          showError(passwordInput, 'password-error', 'Password is required');
+          isValid = false;
+        } else if (passwordInput.value.length < 8) {
+          showError(passwordInput, 'password-error', 'Password must be at least 8 characters');
+          isValid = false;
+        }
+
+        if (yearInput.value.trim() === '') {
+          showError(yearInput, 'year-error', 'Year is required');
+          isValid = false;
+        } else if (!isValidYear(yearInput.value)) {
+          showError(yearInput, 'year-error', 'Please enter a valid Year');
+          isValid = false;
+        }
+
+        if (semInput.value.trim() === '') {
+          showError(semInput, 'sem-error', 'Semester is required');
+          isValid = false;
+        } else if (!isValidSemester(semInput.value)) {
+          showError(semInput, 'sem-error', 'Please enter a valid Semester');
+          isValid = false;
+        }
+
+        if (branchInput.value.trim() === '') {
+          showError(branchInput, 'branch-error', 'Branch is required');
+          isValid = false;
+        } else if (!isValidBranch(branchInput.value)) {
+          showError(branchInput, 'branch-error', 'Please enter a valid Branch');
+          isValid = false;
+        }
+
+        if (sectionInput.value.trim() === '') {
+          showError(sectionInput, 'section-error', 'Section is required');
+          isValid = false;
+        } else if (!isValidSection(sectionInput.value)) {
+          showError(sectionInput, 'section-error', 'Please enter a valid Section');
+          isValid = false;
+        }
+
+        // Validate terms checkbox
+        if (!termsCheckbox.checked) {
+          showToast('Please agree to the Terms of Service and Privacy Policy', 'error');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          e.preventDefault();
+          showToast('Please fix the errors in the form', 'error');
+        } else {
+          // This is just for demo purposes - in a real app, form would submit to server
+          showToast('Creating your account...', 'success');
+        }
+      });
+
+      function showError(inputElement, errorId, message) {
+        inputElement.classList.add('error');
+        const errorElement = document.getElementById(errorId);
+        errorElement.textContent = message;
+        errorElement.classList.add('visible');
+      }
+
+      function isValidEmail(email) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email.toLowerCase());
+      }
+    });
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+      const toastContainer = document.querySelector('.toast-container');
+
+      const toast = document.createElement('div');
+      toast.classList.add('toast', type);
+
+      toast.innerHTML = `
+        <div>${message}</div>
+        <button class="toast-close">&times;</button>
+      `;
+
+      toastContainer.appendChild(toast);
+
+      // Make the toast visible after a small delay
+      setTimeout(() => {
+        toast.classList.add('visible');
+      }, 10);
+
+      // Auto-remove after 5 seconds
+      const timeout = setTimeout(() => {
+        removeToast(toast);
+      }, 5000);
+
+      // Close button functionality
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => {
+        clearTimeout(timeout);
+        removeToast(toast);
+      });
+    }
+
+    function removeToast(toast) {
+      toast.classList.remove('visible');
+
+      // Remove from DOM after transition completes
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }
+  </script>
+</body>
+</html>

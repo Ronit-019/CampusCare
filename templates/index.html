@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Grievance Redressal System</title>
+  <style>
+    /* CSS Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Color Palette */
+      --primary: #3a86ff;
+      --primary-dark: #2667d4;
+      --secondary: #8ecae6;
+      --accent: #ffd166;
+      --success: #70e000;
+      --warning: #ffbe0b;
+      --danger: #ef476f;
+      --neutral-100: #f8f9fa;
+      --neutral-200: #e9ecef;
+      --neutral-300: #dee2e6;
+      --neutral-400: #ced4da;
+      --neutral-500: #adb5bd;
+      --neutral-600: #6c757d;
+      --neutral-700: #495057;
+      --neutral-800: #343a40;
+      --neutral-900: #212529;
+
+      /* Typography */
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --heading-line-height: 1.2;
+      --body-line-height: 1.6;
+
+      /* Spacing & Layout */
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2.5rem;
+      --spacing-xxl: 4rem;
+
+      /* Border Radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+      /* Transitions */
+      --transition-fast: 150ms ease-in-out;
+      --transition-normal: 300ms ease-in-out;
+    }
+
+    body {
+      font-family: var(--font-family);
+      line-height: var(--body-line-height);
+      color: var(--neutral-800);
+      background-color: var(--neutral-100);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      line-height: var(--heading-line-height);
+      margin-bottom: var(--spacing-md);
+      font-weight: 600;
+      color: var(--neutral-800);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    p {
+      margin-bottom: var(--spacing-md);
+    }
+
+    /* Layout Components */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: var(--spacing-xl) 0;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .hero h1 {
+      margin-bottom: var(--spacing-lg);
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-bottom: var(--spacing-xl);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    main {
+      flex: 1;
+      padding: var(--spacing-xl) 0;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .feature-card {
+      background-color: white;
+      border-radius: var(--radius-md);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-card h3 {
+      color: var(--primary);
+      margin-bottom: var(--spacing-md);
+    }
+
+    footer {
+      background-color: var(--neutral-800);
+      color: white;
+      padding: var(--spacing-xl) 0;
+      margin-top: var(--spacing-xl);
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--spacing-lg);
+    }
+
+    /* Component Styles */
+    .btn {
+      display: inline-block;
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      user-select: none;
+      border: none;
+      padding: var(--spacing-sm) var(--spacing-lg);
+      font-size: 1rem;
+      line-height: 1.5;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--neutral-100);
+    }
+
+    .btn-lg {
+      padding: var(--spacing-md) var(--spacing-xl);
+      font-size: 1.1rem;
+    }
+
+    /* Ripple Effect */
+    .btn .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 600ms linear;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: var(--spacing-lg);
+      right: var(--spacing-lg);
+      z-index: 1000;
+    }
+
+    .toast {
+      background-color: white;
+      color: var(--neutral-800);
+      padding: var(--spacing-md) var(--spacing-lg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      margin-top: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transform: translateX(120%);
+      transition: transform var(--transition-normal);
+      min-width: 300px;
+    }
+
+    .toast.visible {
+      transform: translateX(0);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--success);
+    }
+
+    .toast.warning {
+      border-left: 4px solid var(--warning);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--danger);
+    }
+
+    .toast-close {
+      background: none;
+      border: none;
+      color: var(--neutral-500);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background-color: var(--neutral-800);
+      color: white;
+      text-align: center;
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="hero">
+        <h1>Student Grievance Redressal System</h1>
+        <p>A secure platform for students to submit and track grievances efficiently.</p>
+        <button class="btn btn-lg btn-secondary" id="enterPortalBtn" onclick="location.href='/login'">Enter Portal</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="features">
+        <div class="feature-card">
+          <h3>Easy Submission</h3>
+          <p>Submit your grievances through a simple and intuitive form. Choose a category and describe your issue.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Real-time Tracking</h3>
+          <p>Track the status of your grievances in real-time. Get automatic updates when your case progresses.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Automatic Escalation</h3>
+          <p>Grievances that remain unaddressed for 48 hours are automatically escalated to higher authorities.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <h3>Student Grievance Portal</h3>
+          <p>A platform dedicated to addressing student concerns efficiently and transparently.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#" style="color: var(--secondary);">Help & Support</a></li>
+            <li><a href="#" style="color: var(--secondary);">Privacy Policy</a></li>
+            <li><a href="#" style="color: var(--secondary);">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container"></div>
+
+  <script>
+    // Ripple effect for buttons
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttons = document.querySelectorAll('.btn');
+
+      buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          const x = e.clientX - e.target.getBoundingClientRect().left;
+          const y = e.clientY - e.target.getBoundingClientRect().top;
+
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
+
+          this.appendChild(ripple);
+
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+
+      // Enter Portal button redirects to dashboard
+      document.getElementById('enterPortalBtn').addEventListener('click', function() {
+        showToast('Redirecting to dashboard...', 'success');
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1000);
+      });
+    });
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+      const toastContainer = document.querySelector('.toast-container');
+
+      const toast = document.createElement('div');
+      toast.classList.add('toast', type);
+
+      toast.innerHTML = `
+        <div>${message}</div>
+        <button class="toast-close">&times;</button>
+      `;
+
+      toastContainer.appendChild(toast);
+
+      // Make the toast visible after a small delay
+      setTimeout(() => {
+        toast.classList.add('visible');
+      }, 10);
+
+      // Auto-remove after 5 seconds
+      const timeout = setTimeout(() => {
+        removeToast(toast);
+      }, 5000);
+
+      // Close button functionality
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => {
+        clearTimeout(timeout);
+        removeToast(toast);
+      });
+    }
+
+    function removeToast(toast) {
+      toast.classList.remove('visible');
+
+      // Remove from DOM after transition completes
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }
+  </script>
+</body>
+</html>
